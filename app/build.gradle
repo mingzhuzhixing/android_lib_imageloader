@@ -34,4 +34,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //导入本地lib包
+    implementation project(":lib_imageloader")
+
+    //远程仓库api包
 }

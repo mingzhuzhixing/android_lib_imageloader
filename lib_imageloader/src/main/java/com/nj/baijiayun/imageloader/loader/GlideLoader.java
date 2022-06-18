@@ -1,8 +1,6 @@
 package com.nj.baijiayun.imageloader.loader;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.Log;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
@@ -42,6 +40,8 @@ import com.nj.baijiayun.imageloader.transform.BlurBitmapTranformation;
 import com.nj.baijiayun.imageloader.transform.CropSquareTransformation;
 import com.nj.baijiayun.imageloader.transform.RoundedCornersTransformation;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -71,8 +71,6 @@ public class GlideLoader implements ILoader {
         } else {
             builder.setDiskCache(new ExternalPreferredCacheDiskCacheFactory(context, diskCacheName, cacheSizeInM * 1024 * 1024));
         }
-
-
     }
 
     @Override
@@ -227,9 +225,7 @@ public class GlideLoader implements ILoader {
      * @param request r
      */
     private void setAnimator(SingleConfig config, RequestBuilder request) {
-
         DrawableCrossFadeFactory drawableCrossFadeFactory = new DrawableCrossFadeFactory.Builder(300).setCrossFadeEnabled(true).build();
-
         if (config.getAnimationType() == AnimationMode.ANIMATIONID) {
             GenericTransitionOptions genericTransitionOptions = GenericTransitionOptions.with(config.getAnimationId());
             request.transition(genericTransitionOptions);
@@ -241,16 +237,13 @@ public class GlideLoader implements ILoader {
             request.transition(genericTransitionOptions);
         } else {//设置默认的交叉淡入动画
             if (!config.isDontAnimate()) {
-
 //                request.transition(DrawableTransitionOptions.withCrossFade());
                 request.transition(DrawableTransitionOptions.with(drawableCrossFadeFactory));
             } else {
                 request.dontAnimate();
             }
         }
-
     }
-
 
     /**
      * 构建RequestBuilder
@@ -290,7 +283,6 @@ public class GlideLoader implements ILoader {
      * @param options o
      */
     private void setShapeModeAndBlur(SingleConfig config, RequestOptions options) {
-
         int count = 0;
         Transformation[] transformation = new Transformation[statisticsCount(config)];
         if (config.isOpenBlur()) {
@@ -322,19 +314,15 @@ public class GlideLoader implements ILoader {
             case ShapeMode.RECT:
                 break;
             case ShapeMode.RECT_ROUND:
-                transformation[count] = new RoundedCornersTransformation
-                        (config.getRectRoundRadius(), 0, config.getCornerType());
+                transformation[count] = new RoundedCornersTransformation(config.getRectRoundRadius(), 0, config.getCornerType());
                 break;
             case ShapeMode.OVAL:
                 transformation[count] = new CircleCrop();
-                Log.e("TAG", "circleCrop");
                 break;
             case ShapeMode.SQUARE:
                 transformation[count] = new CropSquareTransformation();
                 break;
         }
-        Log.e("TAG", "circleCrop" + transformation);
-
         if (transformation != null) {
             options.transform(transformation);
         }
@@ -342,17 +330,14 @@ public class GlideLoader implements ILoader {
 
     private int statisticsCount(SingleConfig config) {
         int count = 0;
-
         if (config.getScaleMode() > 0) {
             count++;
         }
-
         if (config.getShapeMode() == ShapeMode.OVAL ||
                 config.getShapeMode() == ShapeMode.RECT_ROUND ||
                 config.getShapeMode() == ShapeMode.SQUARE) {
             count++;
         }
-
         if (config.isOpenBlur()) {
             count++;
         }
@@ -369,20 +354,16 @@ public class GlideLoader implements ILoader {
     @Override
     public void pauseRequests(Context context) {
         Glide.with(context).pauseRequestsRecursive();
-
-
     }
 
     @Override
     public void resumeRequests(Fragment fragment) {
         Glide.with(fragment).resumeRequestsRecursive();
-
     }
 
     @Override
     public void pauseRequests(Fragment fragment) {
         Glide.with(fragment).pauseRequestsRecursive();
-
     }
 
 
@@ -394,11 +375,9 @@ public class GlideLoader implements ILoader {
                 Glide.get(GlobalConfig.getInstance().getContext()).clearDiskCache();
             }
         });
-
     }
 
     final ThreadPoolExecutor executorService = new ThreadPoolExecutor(0, 1, 60L, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-
 
     @Override
     public void clearMemory() {
@@ -414,6 +393,4 @@ public class GlideLoader implements ILoader {
     public void onLowMemory() {
         Glide.get(GlobalConfig.getInstance().getContext()).onLowMemory();
     }
-
-
 }

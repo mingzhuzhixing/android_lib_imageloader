@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
     public static String url2 = "http://haodiquan.oss-cn-shanghai.aliyuncs.com/1.572577119933118E12.jpg";
     private static String cover = "";
 
-    private ImageView imageview1, imageview2, imageview2_1,imageview2_2, imageview3, imageview4, imageview5;
+    private ImageView imageview1, imageview2, imageview2_1, imageview2_2, imageview3, imageview3_1,
+            imageview3_2, imageview4, imageview5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         imageview2_1 = findViewById(R.id.imageview2_1);
         imageview2_2 = findViewById(R.id.imageview2_2);
         imageview3 = findViewById(R.id.imageview3);
+        imageview3_1 = findViewById(R.id.imageview3_1);
+        imageview3_2 = findViewById(R.id.imageview3_2);
         imageview4 = findViewById(R.id.imageview4);
         imageview5 = findViewById(R.id.imageview5);
 
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         //返回为true 则不执行into中设置图片 需要自己处理
                         //返回为false 则图片交给into处理
                         if (resource instanceof BitmapDrawable) {
-                            imageview2_1.setImageDrawable((BitmapDrawable)resource);
+                            imageview2_1.setImageDrawable((BitmapDrawable) resource);
                         }
                         return true;
                     }
@@ -157,9 +160,21 @@ public class MainActivity extends AppCompatActivity {
     private void showImageView3() {
         ImageLoader.with(this)
                 .rectRoundCorner(30)
-                .setCornerType(RoundedCornersTransformation.CornerType.TOP)
+                .setCornerType(RoundedCornersTransformation.CornerType.LEFT)
                 .load(url2)
                 .into(imageview3);
+
+        ImageLoader.with(this)
+                .rectRoundCorner(20)
+                .setCornerType(RoundedCornersTransformation.CornerType.TOP)
+                .load(url2)
+                .into(imageview3_1);
+
+        ImageLoader.with(this)
+                .rectRoundCorner(30)
+                .setCornerType(RoundedCornersTransformation.CornerType.RIGHT)
+                .load(url2)
+                .into(imageview3_2);
     }
 
     private void showImageView4() {
@@ -226,6 +241,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void next(View view) {
         //startActivity(new Intent(this, SecondActivity.class));
-        showImageView2();
+        showImageView3();
     }
 }

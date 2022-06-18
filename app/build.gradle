@@ -36,7 +36,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     //导入本地lib包
-    implementation project(":lib_imageloader")
+    //implementation project(":lib_imageloader")
 
-    //远程仓库api包
+    //远程仓库api包com.nj.baijiayun:imageloader:1.0.3
+    implementation "com.nj.baijiayun:imageloader:1.0.6"
+
 }

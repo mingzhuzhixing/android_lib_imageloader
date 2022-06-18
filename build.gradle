@@ -1,4 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+def localProjectDir = projectDir
 buildscript {
     repositories {
         google()
@@ -13,6 +15,14 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven {
+            //微服务地址
+            // url = 'http://172.20.2.114:8081/repository/maven-releases/'
+
+            println("localProjectDir："+localProjectDir)
+            //本地仓库地址
+            url = "file:/${localProjectDir}/repository/maven-releases/"
+        }
     }
 }
 

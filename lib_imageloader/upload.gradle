@@ -30,7 +30,7 @@ afterEvaluate { project ->
 //                }
 
                 //本地仓库
-                repository(url: uri('../release'))
+                repository(url: uri('../repository/maven-releases'))
             }
         }
     }
